@@ -4,34 +4,34 @@ const router = express.Router();
 const queries = require('../queries');
 
 router.get("/authors", (request, response, next) => {
-    queries.list().then(authors => {
+    queries.listAuthors('authors').then(authors => {
         response.json({authors});
     }).catch(next);
 });
 
-router.get("/authors:id", (request, response, next) => {
-    queries.read(request.params.id).then(author => {
-        player
-            ? response.json({author})
+router.get("/authors/:id", (request, response, next) => {
+    queries.read('authors', request.params.id).then(authors => {
+        authors
+            ? response.json({authors})
             : response.status(404).json({message: 'Author not found'})
     }).catch(next);
 });
 
 router.post("/author", (request, response, next) => {
-    queries.create(request.body).then(author => {
-        response.status(201).json({author});
+    queries.post('authors', request.body).then(newPost => {
+        response.status(201).json({newPost});
     }).catch(next);
 });
 
 router.delete("/authors:id", (request, response, next) => {
-    queries.delete(request.params.id).then(() => {
+    queries.delete('authors', request.params.id).then(() => {
         response.status(204).json({deleted: true});
     }).catch(next);
 });
 
 router.put("/authors:id", (request, response, next) => {
-    queries.update(request.params.id, request.body).then(author => {
-        response.json({author});
+    queries.update('authors', request.params.id, request.body).then(newUpdate => {
+        response.json({newUpdate});
     }).catch(next);
 });
 

@@ -4,21 +4,31 @@ const bodyParser = require('body-parser')
 const port = parseInt(process.env.PORT || 3000)
 const books = require("./routes/books")
 const authors = require("./routes/authors")
+// const queries = require('./queries');
 
 const app = express()
-// const queries = require('./queries')
 
 app.use(cors())
 app.use(bodyParser.json())
 
-app.use("/books", books)
-app.use("/authors", authors)
+app.use(books)
+app.use(authors)
 
-app.get('/', (req, res, next) => {
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+  const err = new Error("Not Found. Be sure to append path!");
+  err.status = 404;
+  next(err);
+});
+
+// error handler
+app.use((err, req, res, next) => {
+  res.status(err.status || 500);
   res.json({
-    message: 'Hello World!'
+    message: err.message,
+    error: req.app.get("env") === "development" ? err.stack : {}
   });
-})
+});
 
 
 
