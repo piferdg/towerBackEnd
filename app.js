@@ -4,6 +4,8 @@ const bodyParser = require('body-parser')
 const port = parseInt(process.env.PORT || 3000)
 const books = require("./routes/books")
 const authors = require("./routes/authors")
+const booksInfo = require("./routes/booksinfo")
+const authorsInfo = require("./routes/authorsinfo")
 // const queries = require('./queries');
 
 const app = express()
@@ -13,6 +15,8 @@ app.use(bodyParser.json())
 
 app.use(books)
 app.use(authors)
+app.use(booksInfo)
+app.use(authorsInfo)
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
