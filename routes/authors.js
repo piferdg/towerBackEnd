@@ -23,13 +23,13 @@ router.post("/author", (request, response, next) => {
     }).catch(next);
 });
 
-router.delete("/authors:id", (request, response, next) => {
+router.delete("/authors/:id", (request, response, next) => {
     queries.delete('authors', request.params.id).then(() => {
         response.status(204).json({deleted: true});
     }).catch(next);
 });
 
-router.put("/authors:id", (request, response, next) => {
+router.put("/authors/:id", (request, response, next) => {
     queries.update('authors', request.params.id, request.body).then(newUpdate => {
         response.json({newUpdate});
     }).catch(next);
